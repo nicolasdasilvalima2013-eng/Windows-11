@@ -1,1 +1,22 @@
 
+name: Meu Windows
+
+on:
+  workflow_dispatch:
+
+jobs:
+  windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Informacoes do Windows
+        shell: pwsh
+        run: |
+          Write-Host "MEU COMPUTADOR WINDOWS"
+          Write-Host "----------------------"
+          Get-ComputerInfo | Select-Object WindowsProductName, WindowsVersion, OsArchitecture
+          Write-Host "PROCESSADOR:"
+          Get-CimInstance Win32_Processor | Select-Object Name
+          Write-Host "MEMORIA RAM:"
+          Get-CimInstance Win32_ComputerSystem | Select-Object @{Name="RAM_GB";Expression={[math]::Round($_.TotalPhysicalMemory / 1GB, 2)}}
+          
